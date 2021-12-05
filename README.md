@@ -5,6 +5,9 @@ The purpose of this project is build an interactive dashboard to visualize the b
 
 
 Steps:
+
 Used Plotly.js to build an interactive charts for the dashboard.
+
 Created a Bubble Chart that used data from samples route (/samples/<sample>) to display each sample.
+  
 Displayed the sample metadata from the route /metadata/<sample>

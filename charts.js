@@ -60,12 +60,12 @@ function buildCharts(sample) {
     // 3. Create a variable that holds the samples array. 
   console.log(data);
   var samplesArray = data.samples;
-  console.log(sampleArray);       
+  console.log('samplesArray');    
     // 4. Create a variable that filters the samples for the object with the desired sample number.
-  var selectedIdSamples = sampleArray.filter(data => data.id == sample);
+  var selectedIdSamples = samplesArray.filter(data => data.id == sample);
   console.log(selectedIdSamples);
     //  5. Create a variable that holds the first sample in the array.
-  var firstSample = selectIdSamples[0];
+  var firstSample = selectedIdSamples[0];
   console.log(firstSample);
 
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
@@ -75,7 +75,7 @@ function buildCharts(sample) {
   console.log(otuIds);
   console.log(otuLables);
   //console.log(hello');
-  console.log(sampleValue);
+  console.log('samplesValue');
 
     // 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
@@ -84,7 +84,7 @@ function buildCharts(sample) {
     var yticks = otuIds.slice(0,10).map(id => "OTU" + id).reverse();
     console.log(yticks);
 
-    // 8. Create the trace for the bar chart. 
+    // 8. Create the trace for the bar chart.
     var barData = [{
       x: sample_values.slice(0,10).reverse(),
       text: otuLables.slice(0,10).reverse(),
@@ -116,7 +116,7 @@ function buildCharts(sample) {
 var bubbleData = [{
   x: otuIds,
   y: sampleValue,
-  text: otuLables
+  text: otuLables,
   mode: 'marker',
   marker: {
     size: sampleValue,
@@ -143,8 +143,9 @@ Plotly.newPlot("bubble", bubbleData, bubbleLayout, {responsive: true});
 }
 
 // 1. Create a variable that filters the metadata array for the object with the desired sample number.
-var metadata_SelId = data.metadata_filter(data.id == sample);
-console.log(metadata_SelId);
+d3.json("../samples.json").then(function(data){
+  console.log("hello");
+
 
 // Create a variable that holds the first sample in the array.
 
@@ -156,15 +157,16 @@ console.log(metadata_SelId);
 
 
 // 3. Create a variable that holds the washing frequency.
-var washFreq = +metadata_SelId[0].wfreq;
+function set_metadata(course, data) {
+  var washFreq = +metadata_SelId[0].wfreq;
+
 // Create the yticks for the bar chart.
 
 // Use Plotly to plot the bar data and layout.
-Plotly.newPlot();
+Plotly.newPlot(bar);
 
 // Use Plotly to plot the bubble data and layout.
-Plotly.newPlot();
-
+Plotly.newPlot(bubble);
 
 // 4. Create the trace for the gauge chart.
 var gaugeData = [
@@ -172,7 +174,8 @@ var gaugeData = [
   domain: { x: [0,1 ], y: [0, 1] },
   value: washFreq,
   title: { text: "<b>Belly Button Washing Frequency</b"}
-
+}]
+};
 
 // 5. Create the layout for the gauge chart.
 var gaugeLayout = {
@@ -185,11 +188,9 @@ var gaugeLayout = {
     y: 0,
     yanchor:'center',
     text: "The gauge displays your belly button weekly washing frequency",
-    showarrow: false
-  }] 
+    showarrow: false,
+  }],
 };
-
  // 6. Use Plotly to plot the gauge data and layout.
-Plotly.newPlot("gauge", gaugeData, gaugeLayout, {responsive: true});
+Plotly.newPlot("gauge", gaugeData, gaugeLayout, {responsive: true})
 });
-}
